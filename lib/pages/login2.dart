@@ -4,7 +4,7 @@ import '../services/shared_prefs.dart';
 import 'homepage.dart';
 
 class LoginPage2 extends StatelessWidget {
-  const LoginPage2({Key? key}) : super(key: key);
+  const LoginPage2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LoginPage2 extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
     final DatabaseHelper dbHelper = DatabaseHelper();
 
-    void _login() async {
+    void login() async {
       String email = emailController.text;
       String password = passwordController.text;
 
@@ -46,7 +46,7 @@ class LoginPage2 extends StatelessWidget {
                 decoration: const InputDecoration(labelText: 'Password')),
             const SizedBox(height: 32),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: login,
               style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
               child: const Text('Login'),
             ),

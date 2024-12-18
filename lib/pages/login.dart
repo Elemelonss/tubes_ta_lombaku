@@ -40,7 +40,7 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginPage2(),
+                            builder: (context) => const LoginPage2(),
                           ),
                         );
                       },
@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BuatAkunPage(),
+                            builder: (context) => const BuatAkunPage(),
                           ),
                         );
                       },
