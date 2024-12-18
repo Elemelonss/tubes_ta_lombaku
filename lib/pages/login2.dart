@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../db_helper.dart';
-import 'shared_prefs.dart';
+import '../services/shared_prefs.dart';
 import 'homepage.dart';
 
 class LoginPage2 extends StatelessWidget {
