@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'services/shared_prefs.dart';
+import 'shared_prefs.dart';
 import 'login.dart';
 
 class HomePage extends StatefulWidget {
