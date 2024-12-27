@@ -45,24 +45,17 @@ class LoginPage2 extends StatelessWidget {
                 obscureText: true,
                 decoration: const InputDecoration(labelText: 'Password')),
             const SizedBox(height: 32),
-<<<<<<< HEAD
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: _login,
+                    onPressed: login,
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.amber),
                     child: const Text('Login'),
                   ),
                 ),
               ],
-=======
-            ElevatedButton(
-              onPressed: login,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-              child: const Text('Login'),
->>>>>>> 5cd99a5a5b09e3c814de1bd68da275aae549252a
             ),
           ],
         ),
