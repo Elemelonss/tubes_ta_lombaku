@@ -3,7 +3,7 @@ import '../db_helper.dart';
 import 'login.dart';
 
 class BuatAkunPage extends StatefulWidget {
-  const BuatAkunPage({Key? key}) : super(key: key);
+  const BuatAkunPage({super.key});
 
   @override
   _BuatAkunPageState createState() => _BuatAkunPageState();
