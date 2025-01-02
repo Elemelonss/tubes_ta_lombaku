@@ -38,7 +38,7 @@ class _BuatAkunPageState extends State<BuatAkunPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Informasi Akun')),
+      appBar: AppBar(title: const Text('Daftar Akun')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

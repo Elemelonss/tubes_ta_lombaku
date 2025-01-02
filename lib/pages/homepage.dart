@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../services/shared_prefs.dart';
-import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'lombasaya.dart'; // Tambahkan import halaman LombaSaya
+import 'infolomba.dart';
 import 'profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,9 +19,12 @@ class _HomePageState extends State<HomePage> {
 
   final List<Map<String, String>> recommendations = [
     {'title': 'Lomba Vlog Bela Negara', 'image': 'assets/vlog.png'},
-    {'title': 'Youth Business Plan Competition', 'image': 'assets/business.png'},
+    {
+      'title': 'Youth Business Plan Competition',
+      'image': 'assets/business.png'
+    },
     {'title': 'Hackathon Nasional', 'image': 'assets/vlog.png'},
-    {'title': 'Lomba Poster Digital', 'image': 'assets/vlog.png'},
+    {'title': 'Lomba Poster Digital', 'image': 'assets/business.png'},
   ];
 
   @override
@@ -46,19 +51,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      // Navigasi ke halaman Lomba Saya
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LombaSayaPage()),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   Widget _getBody() {
     switch (_selectedIndex) {
       case 0:
         return _homePageContent();
-      case 1:
-        return _myCompetitionsPage();
       case 2:
-        return _accountPage();
+        return const ProfilePage();
       default:
         return _homePageContent();
     }
@@ -85,10 +96,7 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(
             'Rekomendasi',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
         Expanded(
@@ -103,29 +111,37 @@ class _HomePageState extends State<HomePage> {
             itemCount: _filteredRecommendations.length,
             itemBuilder: (context, index) {
               final item = _filteredRecommendations[index];
-              return Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      item['image']!,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item['title']!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InfoLombaPage(
+                        title: item['title']!,
+                        image: item['image']!,
                       ),
                     ),
-                  ],
+                  );
+                },
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(item['image']!,
+                          height: 60, fit: BoxFit.cover),
+                      const SizedBox(height: 8),
+                      Text(
+                        item['title']!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -133,19 +149,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
-  }
-
-  Widget _myCompetitionsPage() {
-    return Center(
-      child: Text(
-        'Lomba Saya',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _accountPage() {
-    return const ProfilePage();
   }
 
   @override
@@ -160,18 +163,11 @@ class _HomePageState extends State<HomePage> {
       body: _getBody(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+              icon: Icon(Icons.assistant), label: 'Lomba Saya'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assistant),
-            label: 'Lomba Saya',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Akun',
-          ),
+              icon: Icon(Icons.account_circle), label: 'Akun'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
