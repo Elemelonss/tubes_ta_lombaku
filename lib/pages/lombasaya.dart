@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:convert'; // Untuk jsonEncode dan jsonDecode
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_application_1/db_helper.dart';
 
 class LombaSayaPage extends StatefulWidget {
   const LombaSayaPage({Key? key}) : super(key: key);
@@ -10,7 +9,8 @@ class LombaSayaPage extends StatefulWidget {
 }
 
 class _LombaSayaPageState extends State<LombaSayaPage> {
-  List<Map<String, String>> myCompetitions = [];
+  List<Map<String, dynamic>> myCompetitions = [];
+  final dbHelper = DatabaseHelper();
 
   @override
   void initState() {
@@ -18,17 +18,16 @@ class _LombaSayaPageState extends State<LombaSayaPage> {
     _loadMyCompetitions();
   }
 
-  // Memuat daftar lomba yang diikuti dari SharedPreferences
   Future<void> _loadMyCompetitions() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedCompetitions = prefs.getString('myCompetitions');
-    if (savedCompetitions != null) {
-      setState(() {
-        myCompetitions = (jsonDecode(savedCompetitions) as List)
-            .map((item) => Map<String, String>.from(item as Map))
-            .toList();
-      });
-    }
+    final competitions = await dbHelper.getCompetitions();
+    setState(() {
+      myCompetitions = competitions;
+    });
+  }
+
+  Future<void> _deleteCompetition(int id) async {
+    await dbHelper.deleteCompetition(id);
+    _loadMyCompetitions();
   }
 
   @override
@@ -36,7 +35,7 @@ class _LombaSayaPageState extends State<LombaSayaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lomba Saya'),
-        backgroundColor: Colors.amber[800],
+        backgroundColor: const Color.fromARGB(255, 255, 213, 0),
       ),
       body: myCompetitions.isEmpty
           ? const Center(
@@ -54,9 +53,15 @@ class _LombaSayaPageState extends State<LombaSayaPage> {
                   elevation: 3,
                   margin: const EdgeInsets.only(bottom: 12.0),
                   child: ListTile(
-                    leading: Image.asset(item['image']!,
+                    leading: Image.asset(item['image'],
                         width: 50, fit: BoxFit.cover),
-                    title: Text(item['title']!),
+                    title: Text(item['title']),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        _deleteCompetition(item['id']);
+                      },
+                    ),
                   ),
                 );
               },

@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil Saya'),
-        backgroundColor: Colors.amber[800],
+        backgroundColor: const Color.fromARGB(255, 255, 213, 0),
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               const CircleAvatar(
                 radius: 60,
-                backgroundColor: Colors.amber,
+                backgroundColor: Color.fromARGB(255, 255, 213, 0),
                 child: Icon(
                   Icons.account_circle,
                   size: 100,
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 icon: const Icon(Icons.logout),
                 label: const Text('Logout'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[600],
+                  backgroundColor: const Color.fromARGB(255, 255, 127, 125),
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 20.0),
                   shape: RoundedRectangleBorder(
