@@ -19,7 +19,7 @@ class _LombaSayaPageState extends State<LombaSayaPage> {
   }
 
   Future<void> _loadMyCompetitions() async {
-    final competitions = await dbHelper.getCompetitions();
+    final competitions = await dbHelper.getAllCompetitions();
     setState(() {
       myCompetitions = competitions;
     });
